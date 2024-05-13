@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+from src.classes import Transactions
+
 
 def load_json(path: Path) -> list[dict]:
     """
@@ -12,14 +14,39 @@ def load_json(path: Path) -> list[dict]:
         return json.load(file)
 
 
-def get_executed_operation(operations: list[dict]):
+def get_executed_transactions(transactions: list[dict]):
     """
 
-    :param operations:
+    :param transactions:
     :return:
     """
     return [
-        operation
-        for operation in operations
-        if operation.get("state") == "EXECUTED"
+        transaction
+        for transaction in transactions
+        if transaction.get("state") == "EXECUTED"
     ]
+
+
+def get_transactions_instanses(transactions: list[dict]) -> list[Transactions]:
+    """
+
+    :param transactions:
+    :return:
+    """
+    transactions_instanses = []
+    for transaction in transactions:
+        transact = Transactions(
+            state = transaction["state"],
+            date = transaction["date"],
+            amount = transaction["operationAmount"]["amount"],
+            currency = transaction["operationAmount"]["currency"]["name"],
+            description = transaction["description"],
+            to = transaction["to"],
+            from_ = transaction.get("from"),
+        )
+        transactions_instanses.append(transact)
+    return transactions_instanses
+
+
+def sort_transactions_by_date(transactions: list[dict]) -> list[dict]:
+    pass
