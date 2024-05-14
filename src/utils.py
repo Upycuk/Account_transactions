@@ -48,5 +48,5 @@ def get_transactions_instanses(transactions: list[dict]) -> list[Transactions]:
     return transactions_instanses
 
 
-def sort_transactions_by_date(transactions: list[dict]) -> list[dict]:
-    pass
+def sort_transactions_by_date(transactions: list[Transactions]) -> list[Transactions]:
+    return sorted(transactions)

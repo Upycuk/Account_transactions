@@ -1,4 +1,5 @@
 import datetime
+import re
 
 
 class Transactions:
@@ -16,19 +17,26 @@ class Transactions:
         self.amount = amount
         self.currency = currency
         self.description = description
-        self.from_ = self.convert_payment_data(from_) if from_ is not None else ''
-        self.to = self.convert_payment_data(to)
+        self.from_ = from_ if from_ is not None else ''
+        self.to = to
 
 
-    def convert_payment_data(self, payment_data: str) -> str:
+    def convert_from(self) -> str:
         """
 
-        :param payment_data:
         :return:
         """
-        if payment_data.startswith('Счет'):
-            return f'Счет **{payment_data[-4:]}\n'
-        return f'**** {payment_data[-4:]}\n'
+        result = "".join(re.findall(r'\d+', self.from_))
+        return f'{result[6:]}** **** {result[-4:]}\n'
+
+
+    def convert_to(self) -> str:
+        """
+
+        :return:
+        """
+        result = "".join(re.findall(r'\d+', self.to))
+        return f'**{result[-4:]}\n'
 
 
     def convert_data(self) -> str:
@@ -38,6 +46,22 @@ class Transactions:
         """
         iso_date = datetime.datetime.fromisoformat(self.date)
         return iso_date.strftime('%d.%m.%Y')
+
+
+    def convert_description(self):
+        """
+
+        :return:
+        """
+        return self.description
+
+
+    def convert_operationAmount_amount(self):
+        return self.amount
+
+
+    def convert_operationAmount_currency(self):
+        return self.currency
 
 
     def __lt__(self, other):
