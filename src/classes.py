@@ -10,7 +10,7 @@ class Transactions:
                  currency: str,
                  description: str,
                  to: str,
-                 from_: str = None
+                 from_: str | None
     ):
         self.state = state
         self.date = date
@@ -31,6 +31,8 @@ class Transactions:
             from_ = "".join(self.from_)
             name = from_.replace(result, '')
             return f'{name} {result[:6]}** **** {result[-4:]}'
+        else:
+            return ''
 
 
     def convert_to(self) -> str:
