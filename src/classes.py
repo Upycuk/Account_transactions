@@ -26,7 +26,7 @@ class Transactions:
 
         :return:
         """
-        if self.from_ is not None:
+        if self.from_:
             result = "".join(re.findall(r'\d+', self.from_))
             from_ = "".join(self.from_)
             name = from_.replace(result, '')
