@@ -26,8 +26,11 @@ class Transactions:
 
         :return:
         """
-        result = "".join(re.findall(r'\d+', self.from_))
-        return f'{result[6:]}** **** {result[-4:]}\n'
+        if self.from_ is not None:
+            result = "".join(re.findall(r'\d+', self.from_))
+            from_ = "".join(self.from_)
+            name = from_.replace(result, '')
+            return f'{name} {result[:6]}** **** {result[-4:]}'
 
 
     def convert_to(self) -> str:
@@ -36,7 +39,7 @@ class Transactions:
         :return:
         """
         result = "".join(re.findall(r'\d+', self.to))
-        return f'**{result[-4:]}\n'
+        return f'**{result[-4:]}'
 
 
     def convert_data(self) -> str:
@@ -70,3 +73,9 @@ class Transactions:
 
     def __gt__(self, other):
             return self.date > other.date
+
+
+    def __str__(self):
+        return (f'{self.convert_data()} {self.convert_description()}\n'
+                f'{self.convert_from()} -> {self.convert_to()}\n'
+                f'{self.convert_operationAmount_amount()} {self.convert_operationAmount_currency()}\n')
