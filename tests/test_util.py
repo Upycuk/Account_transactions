@@ -7,7 +7,7 @@ def test_get_executed_transactions():
         {"state": "EXECUTED"},
         {"state": "EXECUTED"},
         {},
-        {['qwerty']}
+        {"state": "qwerty"}
     ]
 
     executed_transactions = [
@@ -30,12 +30,12 @@ def test_transaction_instance():
     )
 
     assert t.state == "EXECUTED"
-    assert t.date == "26.08.2019"
+    assert t.convert_data() == "26.08.2019"
     assert t.amount == "31957.58"
     assert t.currency == "руб."
     assert t.description == "Перевод организации"
-    assert t.from_ == "Maestro  159683** **** 5199"
-    assert t.to == "**9589"
+    assert t.convert_from() == "Maestro  159683** **** 5199"
+    assert t.convert_to() == "**9589"
 
 
 def test_transaction_instance_none_from():
