@@ -14,7 +14,7 @@ def load_json(path: Path) -> list[dict]:
         return json.load(file)
 
 
-def get_executed_transactions(transactions: list[dict]):
+def get_executed_transactions(transactions: list[dict]) -> object:
     """
 
     :param transactions:
